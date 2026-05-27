@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ product_name }} — SyncRivo</title>
+  <style>
+    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #0f172a; color: #e2e8f0; margin: 0; padding: 0; }
+    .wrapper { background-color: #0f172a; width: 100%; padding: 40px 0; }
+    .container { max-width: 600px; background-color: #1e293b; margin: 0 auto; border-radius: 16px; overflow: hidden; border: 1px solid #334155; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+    .header { background: linear-gradient(135deg, #7c3aed, #6366f1, #3b82f6); padding: 60px 40px; text-align: center; position: relative; overflow: hidden; }
+    .header::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%); }
+    .header-badge { display: inline-block; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); color: #fff; font-size: 11px; font-weight: 700; padding: 5px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; border: 1px solid rgba(255,255,255,0.2); }
+    .header h1 { margin: 0; color: #fff; font-size: 32px; font-weight: 900; line-height: 1.2; letter-spacing: -0.5px; }
+    .header-sub { color: #c4b5fd; font-size: 15px; margin: 12px 0 0; }
+    .content { padding: 40px; }
+    .greeting { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+    .intro { font-size: 15px; line-height: 1.7; color: #94a3b8; margin-bottom: 28px; }
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 28px; }
+    .feature-card { background-color: #0f172a; border-radius: 10px; border: 1px solid #334155; padding: 20px; }
+    .feature-icon { font-size: 26px; margin-bottom: 10px; }
+    .feature-title { font-size: 14px; font-weight: 700; color: #e2e8f0; margin-bottom: 6px; }
+    .feature-desc { font-size: 13px; color: #64748b; line-height: 1.5; }
+    .hero-cta { background: linear-gradient(135deg, #7c3aed, #4f46e5); border-radius: 14px; padding: 36px; text-align: center; margin-bottom: 28px; }
+    .hero-cta-title { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+    .hero-cta-body { font-size: 14px; color: #c4b5fd; margin-bottom: 24px; line-height: 1.6; }
+    .btn-white { display: inline-block; background: #fff; color: #6d28d9 !important; text-decoration: none; padding: 14px 36px; border-radius: 10px; font-weight: 800; font-size: 15px; }
+    .social-proof { background-color: #0f172a; border-radius: 12px; border: 1px solid #334155; padding: 24px; text-align: center; margin-bottom: 28px; }
+    .social-stat { display: inline-block; padding: 0 20px; }
+    .social-num { font-size: 26px; font-weight: 900; color: #fff; }
+    .social-label { font-size: 12px; color: #64748b; }
+    .social-sep { display: inline-block; color: #334155; font-size: 24px; vertical-align: middle; padding: 0 4px; }
+    .footer { background-color: #0f172a; padding: 28px 40px; text-align: center; font-size: 12px; color: #64748b; border-top: 1px solid #1e293b; line-height: 1.7; }
+    .footer a { color: #6366f1; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <div class="header">
+        <div class="header-badge">🚀 New Launch</div>
+        <h1>{{ announcement_title }}</h1>
+        <div class="header-sub">{{ product_name }} just got even better.</div>
+      </div>
+      <div class="content">
+        <div class="greeting">Hi {{ username }},</div>
+        <div class="intro">{{ announcement_body }}</div>
+
+        {% if features %}
+        <div class="feature-grid">
+          {% for feat in features %}
+          <div class="feature-card">
+            <div class="feature-icon">{{ feat.icon | default("✨") }}</div>
+            <div class="feature-title">{{ feat.title }}</div>
+            <div class="feature-desc">{{ feat.description }}</div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if stats %}
+        <div class="social-proof">
+          {% for stat in stats %}
+          <span class="social-stat">
+            <div class="social-num">{{ stat.value }}</div>
+            <div class="social-label">{{ stat.label }}</div>
+          </span>
+          {% if not loop.last %}<span class="social-sep">|</span>{% endif %}
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if cta_url %}
+        <div class="hero-cta">
+          <div class="hero-cta-title">{{ cta_title | default("Try It Today") }}</div>
+          <div class="hero-cta-body">{{ cta_body | default("Experience the new features firsthand.") }}</div>
+          <a href="{{ cta_url }}" class="btn-white">{{ cta_text | default("Get Started →") }}</a>
+        </div>
+        {% endif %}
+      </div>
+      <div class="footer">
+        &copy; 2026 {{ company_name | default("SyncRivo") }}. All rights reserved.<br>
+        <a href="https://syncrivo.ai">syncrivo.ai</a> &bull; <a href="mailto:support@syncrivo.ai">support@syncrivo.ai</a><br>
+        <a href="https://syncrivo.ai/unsubscribe">Unsubscribe</a> | <a href="https://syncrivo.ai/privacy">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

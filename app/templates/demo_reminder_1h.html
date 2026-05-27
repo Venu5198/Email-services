@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo Starting Soon — SyncRivo</title>
+  <style>
+    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #0f172a; color: #e2e8f0; margin: 0; padding: 0; }
+    .wrapper { background-color: #0f172a; width: 100%; padding: 40px 0; }
+    .container { max-width: 600px; background-color: #1e293b; margin: 0 auto; border-radius: 16px; overflow: hidden; border: 1px solid #334155; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+    .header { background: linear-gradient(135deg, #dc2626, #b91c1c); padding: 50px 40px; text-align: center; }
+    .header-icon { font-size: 48px; margin-bottom: 16px; }
+    .header h1 { margin: 0; color: #fff; font-size: 28px; font-weight: 800; }
+    .header p { color: #fecaca; font-size: 15px; margin: 10px 0 0; }
+    .content { padding: 40px; }
+    .greeting { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+    .intro { font-size: 15px; line-height: 1.7; color: #94a3b8; margin-bottom: 28px; }
+    .badge { display: inline-block; background-color: #7f1d1d; color: #fca5a5; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 16px; }
+    .urgent-box { background: linear-gradient(135deg, #1e293b, #0f172a); border: 2px solid #dc2626; border-radius: 12px; padding: 28px; text-align: center; margin-bottom: 28px; }
+    .urgent-time { font-size: 52px; font-weight: 900; color: #f87171; letter-spacing: -3px; line-height: 1; margin-bottom: 8px; }
+    .urgent-label { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .urgent-sublabel { font-size: 14px; color: #94a3b8; }
+    .detail-card { background-color: #0f172a; border-radius: 12px; border: 1px solid #334155; padding: 20px 24px; margin-bottom: 28px; }
+    .detail-row { display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid #1e293b; }
+    .detail-row:last-child { border-bottom: none; }
+    .detail-icon { font-size: 18px; margin-right: 14px; min-width: 24px; }
+    .detail-label { font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; margin-bottom: 2px; }
+    .detail-value { font-size: 15px; color: #e2e8f0; font-weight: 600; }
+    .btn-group { text-align: center; margin: 28px 0; }
+    .btn-join { display: inline-block; background: linear-gradient(135deg, #dc2626, #b91c1c); color: #fff !important; text-decoration: none; padding: 18px 44px; border-radius: 10px; font-weight: 800; font-size: 17px; letter-spacing: 0.3px; box-shadow: 0 4px 20px rgba(220,38,38,0.4); }
+    .footer { background-color: #0f172a; padding: 28px 40px; text-align: center; font-size: 12px; color: #64748b; border-top: 1px solid #1e293b; line-height: 1.7; }
+    .footer a { color: #f87171; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <div class="header">
+        <div class="header-icon">🔴</div>
+        <h1>Starting in 1 Hour!</h1>
+        <p>Your SyncRivo demo is about to begin.</p>
+      </div>
+      <div class="content">
+        <span class="badge">🔴 Starting Soon</span>
+        <div class="greeting">Hello {{ customer_name }},</div>
+        <div class="intro">
+          Your SyncRivo demo starts in <strong style="color:#f87171;">1 hour</strong>. Please make sure you're ready to join — click the button below when it's time!
+        </div>
+
+        <div class="urgent-box">
+          <div class="urgent-time">1h</div>
+          <div class="urgent-label">{{ demo_date }}</div>
+          <div class="urgent-sublabel">{{ demo_time }}</div>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-row">
+            <span class="detail-icon">🔗</span>
+            <div>
+              <div class="detail-label">Meeting Link</div>
+              <div class="detail-value"><a href="{{ meeting_link }}" style="color:#f87171;">{{ meeting_link }}</a></div>
+            </div>
+          </div>
+          {% if host_name %}
+          <div class="detail-row">
+            <span class="detail-icon">👤</span>
+            <div>
+              <div class="detail-label">Host</div>
+              <div class="detail-value">{{ host_name }}</div>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="btn-group">
+          <a href="{{ meeting_link }}" class="btn-join">🎥 Join Now</a>
+        </div>
+
+        <p style="text-align:center; font-size:13px; color:#64748b;">
+          Having trouble joining? Contact <a href="mailto:support@syncrivo.ai" style="color:#f87171;">support@syncrivo.ai</a>
+        </p>
+      </div>
+      <div class="footer">
+        &copy; 2026 SyncRivo. All rights reserved.<br>
+        <a href="https://syncrivo.ai">syncrivo.ai</a> &bull; <a href="mailto:support@syncrivo.ai">support@syncrivo.ai</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

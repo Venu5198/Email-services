@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service Request — SyncRivo Internal</title>
+  <style>
+    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #0f172a; color: #e2e8f0; margin: 0; padding: 0; }
+    .wrapper { background-color: #0f172a; width: 100%; padding: 40px 0; }
+    .container { max-width: 620px; background-color: #1e293b; margin: 0 auto; border-radius: 16px; overflow: hidden; border: 1px solid #334155; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+    .header { background: linear-gradient(135deg, #0ea5e9, #0369a1); padding: 40px; text-align: center; }
+    .header-icon { font-size: 48px; margin-bottom: 12px; }
+    .header h1 { margin: 0; color: #fff; font-size: 26px; font-weight: 900; }
+    .header p { color: #bae6fd; font-size: 14px; margin: 8px 0 0; }
+    .content { padding: 36px 40px; }
+    .badge { display: inline-block; background-color: #0c4a6e; color: #7dd3fc; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 20px; }
+    .request-id { font-size: 18px; font-weight: 800; color: #7dd3fc; margin-bottom: 6px; }
+    .request-title { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 20px; }
+    .description { font-size: 15px; line-height: 1.7; color: #94a3b8; background-color: #0f172a; border-radius: 10px; padding: 20px; margin-bottom: 24px; border: 1px solid #334155; }
+    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+    .meta-cell { background-color: #0f172a; border-radius: 10px; padding: 16px; border: 1px solid #334155; }
+    .meta-label { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+    .meta-value { font-size: 14px; font-weight: 700; color: #e2e8f0; }
+    .footer { background-color: #0f172a; padding: 20px 40px; text-align: center; font-size: 12px; color: #64748b; border-top: 1px solid #1e293b; }
+    .footer a { color: #0ea5e9; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <div class="header">
+        <div class="header-icon">📋</div>
+        <h1>New Service Request</h1>
+        <p>SyncRivo Internal Support Team Notification</p>
+      </div>
+      <div class="content">
+        <span class="badge">📋 Service Request</span>
+        <div class="request-id">{{ request_id }}</div>
+        <div class="request-title">{{ title }}</div>
+        <div class="description">{{ description }}</div>
+
+        <div class="meta-grid">
+          <div class="meta-cell">
+            <div class="meta-label">Requested By</div>
+            <div class="meta-value">{{ requested_by }}</div>
+          </div>
+          <div class="meta-cell">
+            <div class="meta-label">Category</div>
+            <div class="meta-value">{{ category | default("General") }}</div>
+          </div>
+          <div class="meta-cell">
+            <div class="meta-label">Priority</div>
+            <div class="meta-value">{{ priority | title }}</div>
+          </div>
+          <div class="meta-cell">
+            <div class="meta-label">Submitted At</div>
+            <div class="meta-value">{{ submitted_at | default("Now") }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        SyncRivo Internal &bull; <a href="mailto:support@syncrivo.ai">support@syncrivo.ai</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

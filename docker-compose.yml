@@ -1,0 +1,114 @@
+# =============================================================================
+# SyncRivo Centralized Email Service — Docker Compose
+#
+# Services:
+#   mongo    → MongoDB 7 (data persistence via named volume)
+#   api      → FastAPI backend (multi-stage build)
+#   frontend → Next.js admin dashboard (multi-stage build)
+#
+# Networks:
+#   syncrivo-net → internal bridge network (services talk by name)
+#
+# Usage:
+#   Start:   docker compose up -d --build
+#   Logs:    docker compose logs -f
+#   Stop:    docker compose down
+#   Reset:   docker compose down -v   (WARNING: deletes MongoDB data)
+# =============================================================================
+
+services:
+
+  # ── MongoDB ──────────────────────────────────────────────────────────────────
+  mongo:
+    image: mongo:7-jammy
+    container_name: syncrivo-mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: email_service
+    volumes:
+      - mongo_data:/data/db           # Persistent data volume
+      - ./docker/mongo-init.js:/docker-entrypoint-initdb.d/init.js:ro
+    ports:
+      - "27017:27017"                 # Expose locally for MongoDB Compass
+    networks:
+      - syncrivo-net
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+
+  # ── FastAPI Backend ───────────────────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime                 # Use the final lean stage
+    container_name: syncrivo-api
+    restart: unless-stopped
+    env_file:
+      - .env                          # Loads all SMTP, MongoDB, Slack settings
+    environment:
+      # Override MongoDB URI to point to the mongo container name
+      MONGODB_URI: mongodb://mongo:27017
+      MONGODB_DB_NAME: email_service
+      # Tracking and unsubscribe URLs point to the public-facing frontend
+      TRACKING_BASE_URL: http://localhost:3000
+      UNSUBSCRIBE_BASE_URL: http://localhost:3000
+    ports:
+      - "8000:8000"                   # FastAPI + Swagger UI
+    networks:
+      - syncrivo-net
+    depends_on:
+      mongo:
+        condition: service_healthy    # Wait until MongoDB is ready
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    volumes:
+      - api_uploads:/app/uploads      # Persistent attachment uploads
+
+  # ── Next.js Frontend ──────────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: runtime                 # Use the final standalone stage
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8000   # Baked into JS bundle at build time
+    container_name: syncrivo-frontend
+    restart: unless-stopped
+    environment:
+      # The browser calls this URL directly from the user's machine
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+      # Server-side rewrites use the internal Docker network name
+      INTERNAL_API_URL: http://api:8000
+      NODE_ENV: production
+    ports:
+      - "3000:3000"                   # Next.js admin dashboard
+    networks:
+      - syncrivo-net
+    depends_on:
+      api:
+        condition: service_healthy    # Wait until FastAPI is healthy
+
+
+# ── Named Volumes ─────────────────────────────────────────────────────────────
+volumes:
+  mongo_data:
+    driver: local
+    name: syncrivo_mongo_data
+  api_uploads:
+    driver: local
+    name: syncrivo_api_uploads
+
+
+# ── Network ────────────────────────────────────────────────────────────────────
+networks:
+  syncrivo-net:
+    driver: bridge
+    name: syncrivo-network

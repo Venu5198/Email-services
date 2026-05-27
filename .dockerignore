@@ -1,0 +1,36 @@
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+dist/
+build/
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# ── Environment ───────────────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+# Don't include test files and scratch files in images
+tests/
+test_*.py
+send_email.py
+test_attachment.txt
+test_doc.txt
+*.drawio
+*.drawio.bkp
+
+# ── Node / Frontend (for root-level backend image) ───────────────────────────
+frontend/
+node_modules/
+
+# ── Python venv ───────────────────────────────────────────────────────────────
+venv/
+.venv/
+env/

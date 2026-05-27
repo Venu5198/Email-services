@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo Cancelled — SyncRivo</title>
+  <style>
+    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #0f172a; color: #e2e8f0; margin: 0; padding: 0; }
+    .wrapper { background-color: #0f172a; width: 100%; padding: 40px 0; }
+    .container { max-width: 600px; background-color: #1e293b; margin: 0 auto; border-radius: 16px; overflow: hidden; border: 1px solid #334155; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+    .header { background: linear-gradient(135deg, #64748b, #475569); padding: 50px 40px; text-align: center; }
+    .header-icon { font-size: 48px; margin-bottom: 16px; }
+    .header h1 { margin: 0; color: #fff; font-size: 28px; font-weight: 800; }
+    .header p { color: #cbd5e1; font-size: 15px; margin: 10px 0 0; }
+    .content { padding: 40px; }
+    .greeting { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+    .intro { font-size: 15px; line-height: 1.7; color: #94a3b8; margin-bottom: 28px; }
+    .badge { display: inline-block; background-color: #1e1e1e; color: #94a3b8; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 16px; }
+    .cancelled-card { background-color: #0f172a; border-radius: 12px; border: 1px solid #334155; padding: 24px; margin-bottom: 28px; text-align: center; }
+    .cancelled-date { font-size: 20px; font-weight: 700; color: #94a3b8; text-decoration: line-through; margin-bottom: 6px; }
+    .cancelled-label { font-size: 13px; color: #64748b; }
+    .rebook-box { background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 12px; border: 1px solid #6366f1; padding: 28px; text-align: center; margin-bottom: 28px; }
+    .rebook-title { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .rebook-body { font-size: 14px; color: #94a3b8; margin-bottom: 20px; line-height: 1.6; }
+    .btn-primary { display: inline-block; background: linear-gradient(135deg, #6366f1, #4f46e5); color: #fff !important; text-decoration: none; padding: 14px 32px; border-radius: 10px; font-weight: 700; font-size: 15px; }
+    .footer { background-color: #0f172a; padding: 28px 40px; text-align: center; font-size: 12px; color: #64748b; border-top: 1px solid #1e293b; line-height: 1.7; }
+    .footer a { color: #6366f1; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <div class="header">
+        <div class="header-icon">❌</div>
+        <h1>Demo Cancelled</h1>
+        <p>Your SyncRivo demo appointment has been cancelled.</p>
+      </div>
+      <div class="content">
+        <span class="badge">Cancelled</span>
+        <div class="greeting">Hello {{ customer_name }},</div>
+        <div class="intro">
+          We've confirmed the cancellation of your SyncRivo demo session. We're sorry to see it go, and we hope to connect with you again soon.
+        </div>
+
+        <div class="cancelled-card">
+          <div class="cancelled-date">{{ demo_date }} — {{ demo_time }}</div>
+          <div class="cancelled-label">This session has been cancelled</div>
+        </div>
+
+        <div class="rebook-box">
+          <div class="rebook-title">🔁 Ready to Book Again?</div>
+          <div class="rebook-body">
+            Whenever you're ready to explore SyncRivo, our team is here. Book a fresh demo at a time that works best for you.
+          </div>
+          {% if rebook_link %}
+          <a href="{{ rebook_link }}" class="btn-primary">📅 Book a New Demo</a>
+          {% endif %}
+        </div>
+
+        <p style="font-size:14px; color:#64748b; text-align:center;">
+          Questions? Reach us anytime at <a href="mailto:support@syncrivo.ai" style="color:#6366f1;">support@syncrivo.ai</a>
+        </p>
+      </div>
+      <div class="footer">
+        &copy; 2026 SyncRivo. All rights reserved.<br>
+        <a href="https://syncrivo.ai">syncrivo.ai</a> &bull; <a href="mailto:support@syncrivo.ai">support@syncrivo.ai</a><br>
+        <a href="https://syncrivo.ai/unsubscribe">Unsubscribe</a> | <a href="https://syncrivo.ai/privacy">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

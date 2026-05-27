@@ -1,0 +1,2 @@
+This is a test file to verify that the attachment functionality works correctly.
+This can be a text file, an image, a PDF, or any other file type.

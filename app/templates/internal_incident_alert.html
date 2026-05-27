@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🚨 Incident Alert — SyncRivo Internal</title>
+  <style>
+    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #0f172a; color: #e2e8f0; margin: 0; padding: 0; }
+    .wrapper { background-color: #0f172a; width: 100%; padding: 40px 0; }
+    .container { max-width: 620px; background-color: #1e293b; margin: 0 auto; border-radius: 16px; overflow: hidden; border: 2px solid #dc2626; box-shadow: 0 20px 40px rgba(220,38,38,0.2); }
+    .header { background: linear-gradient(135deg, #7f1d1d, #dc2626); padding: 40px; text-align: center; }
+    .header-icon { font-size: 48px; margin-bottom: 12px; }
+    .header h1 { margin: 0; color: #fff; font-size: 26px; font-weight: 900; letter-spacing: -0.5px; }
+    .header p { color: #fecaca; font-size: 14px; margin: 8px 0 0; }
+    .severity-banner { padding: 14px 40px; text-align: center; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; }
+    .severity-critical { background-color: #dc2626; color: #fff; }
+    .severity-high { background-color: #f97316; color: #fff; }
+    .severity-medium { background-color: #f59e0b; color: #0f172a; }
+    .severity-low { background-color: #10b981; color: #fff; }
+    .content { padding: 36px 40px; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #64748b; margin-bottom: 12px; }
+    .incident-title { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 20px; border-left: 4px solid #dc2626; padding-left: 14px; }
+    .description { font-size: 15px; line-height: 1.7; color: #94a3b8; background-color: #0f172a; border-radius: 10px; padding: 20px; margin-bottom: 24px; border: 1px solid #334155; }
+    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+    .meta-cell { background-color: #0f172a; border-radius: 10px; padding: 16px; border: 1px solid #334155; }
+    .meta-label { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+    .meta-value { font-size: 15px; font-weight: 700; color: #e2e8f0; }
+    .affected-service { display: inline-block; background-color: #7f1d1d; color: #fca5a5; font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 20px; margin-bottom: 24px; }
+    .action-list { list-style: none; padding: 0; margin: 0 0 24px; }
+    .action-list li { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #1e293b; font-size: 14px; color: #94a3b8; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-list li::before { content: "→"; color: #dc2626; font-weight: 700; margin-right: 10px; }
+    .timestamp { font-size: 12px; color: #64748b; text-align: right; padding-top: 16px; border-top: 1px solid #1e293b; }
+    .footer { background-color: #0f172a; padding: 20px 40px; text-align: center; font-size: 12px; color: #64748b; border-top: 1px solid #1e293b; }
+    .footer a { color: #f87171; text-decoration: none; }
+    .confidential { background-color: #7f1d1d; color: #fca5a5; font-size: 11px; font-weight: 700; text-align: center; padding: 8px; letter-spacing: 1px; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      {% if is_confidential %}
+      <div class="confidential">🔒 CONFIDENTIAL — INTERNAL USE ONLY</div>
+      {% endif %}
+      <div class="header">
+        <div class="header-icon">🚨</div>
+        <h1>Incident Alert</h1>
+        <p>SyncRivo Internal Operations — Immediate Attention Required</p>
+      </div>
+      <div class="severity-banner severity-{{ severity }}">
+        {{ severity | upper }} SEVERITY — {{ incident_id }}
+      </div>
+      <div class="content">
+        <div class="incident-title">{{ title }}</div>
+
+        <div class="section-title">📋 Description</div>
+        <div class="description">{{ description }}</div>
+
+        <div class="section-title">📊 Incident Details</div>
+        <div class="meta-grid">
+          <div class="meta-cell">
+            <div class="meta-label">Incident ID</div>
+            <div class="meta-value">{{ incident_id }}</div>
+          </div>
+          <div class="meta-cell">
+            <div class="meta-label">Severity</div>
+            <div class="meta-value">{{ severity | upper }}</div>
+          </div>
+          <div class="meta-cell">
+            <div class="meta-label">Reported By</div>
+            <div class="meta-value">{{ reported_by }}</div>
+          </div>
+          <div class="meta-cell">
+            <div class="meta-label">Environment</div>
+            <div class="meta-value">{{ environment | default("Production") }}</div>
+          </div>
+        </div>
+
+        <div class="section-title">🛠 Affected Service</div>
+        <div class="affected-service">💥 {{ affected_service }}</div>
+
+        {% if action_items %}
+        <div class="section-title">⚡ Immediate Actions Required</div>
+        <ul class="action-list">
+          {% for action in action_items %}
+          <li>{{ action }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+        <div class="timestamp">
+          🕐 Reported at: {{ reported_at | default("Now") }}<br>
+          📡 Notification sent to: support@syncrivo.ai
+        </div>
+      </div>
+      <div class="footer">
+        SyncRivo Internal Incident Management &bull; <a href="mailto:support@syncrivo.ai">support@syncrivo.ai</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

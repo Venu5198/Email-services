@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Submitted — SyncRivo</title>
+  <style>
+    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #0f172a; color: #e2e8f0; margin: 0; padding: 0; }
+    .wrapper { background-color: #0f172a; width: 100%; padding: 40px 0; }
+    .container { max-width: 600px; background-color: #1e293b; margin: 0 auto; border-radius: 16px; overflow: hidden; border: 1px solid #334155; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+    .header { background: linear-gradient(135deg, #10b981, #06b6d4); padding: 50px 40px; text-align: center; }
+    .header-icon { font-size: 48px; margin-bottom: 16px; }
+    .header h1 { margin: 0; color: #fff; font-size: 28px; font-weight: 800; }
+    .header p { color: #d1fae5; font-size: 15px; margin: 10px 0 0; }
+    .content { padding: 40px; }
+    .greeting { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+    .intro { font-size: 15px; line-height: 1.7; color: #94a3b8; margin-bottom: 28px; }
+    .badge { display: inline-block; background-color: #052e16; color: #34d399; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 16px; }
+    .confirmation-card { background-color: #0f172a; border-radius: 12px; border: 1px solid #334155; padding: 24px; margin-bottom: 28px; text-align: center; }
+    .ref-label { font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+    .ref-id { font-size: 26px; font-weight: 900; color: #34d399; }
+    .divider { height: 1px; background: #1e293b; margin: 16px 0; }
+    .form-type-label { font-size: 13px; color: #64748b; }
+    .form-type-val { font-size: 16px; font-weight: 700; color: #e2e8f0; }
+    .preview-box { background-color: #0f172a; border-radius: 10px; border-left: 4px solid #10b981; padding: 16px 20px; margin-bottom: 24px; font-size: 14px; color: #94a3b8; line-height: 1.6; font-style: italic; }
+    .what-next { list-style: none; padding: 0; margin: 0 0 28px; }
+    .what-next li { display: flex; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid #1e293b; font-size: 14px; color: #94a3b8; }
+    .what-next li:last-child { border-bottom: none; }
+    .what-next li .num { background: linear-gradient(135deg, #10b981, #059669); color: #fff; font-weight: 700; font-size: 12px; border-radius: 50%; width: 22px; height: 22px; min-width: 22px; display: flex; align-items: center; justify-content: center; margin-right: 12px; margin-top: 1px; }
+    .footer { background-color: #0f172a; padding: 28px 40px; text-align: center; font-size: 12px; color: #64748b; border-top: 1px solid #1e293b; line-height: 1.7; }
+    .footer a { color: #10b981; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <div class="header">
+        <div class="header-icon">✅</div>
+        <h1>Form Submitted!</h1>
+        <p>We've received your {{ form_type | replace("_", " ") | title }} submission.</p>
+      </div>
+      <div class="content">
+        <span class="badge">✅ Confirmed</span>
+        <div class="greeting">Hello {{ submitter_name }},</div>
+        <div class="intro">
+          Thank you for reaching out to SyncRivo! Your form submission has been received and our team has been notified. Here's a summary of what you submitted:
+        </div>
+
+        <div class="confirmation-card">
+          <div class="ref-label">Submission Reference</div>
+          <div class="ref-id">{{ submission_id }}</div>
+          <div class="divider"></div>
+          <div class="form-type-label">Form Type</div>
+          <div class="form-type-val">{{ form_type | replace("_", " ") | title }}</div>
+        </div>
+
+        {% if message_preview %}
+        <div class="preview-box">
+          "{{ message_preview }}"
+        </div>
+        {% endif %}
+
+        <div style="font-size:13px; color:#64748b; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:12px;">What Happens Next</div>
+        <ul class="what-next">
+          <li><span class="num">1</span>Our team reviews your submission (typically within 1 business day)</li>
+          <li><span class="num">2</span>A SyncRivo specialist will follow up at {{ submitter_email }}</li>
+          <li><span class="num">3</span>We'll work with you to address your needs directly</li>
+        </ul>
+
+        <p style="font-size:14px; color:#64748b; text-align:center;">
+          Have questions in the meantime? <a href="mailto:support@syncrivo.ai" style="color:#10b981;">support@syncrivo.ai</a>
+        </p>
+      </div>
+      <div class="footer">
+        &copy; 2026 SyncRivo. All rights reserved.<br>
+        <a href="https://syncrivo.ai">syncrivo.ai</a> &bull; <a href="mailto:support@syncrivo.ai">support@syncrivo.ai</a><br>
+        <a href="https://syncrivo.ai/unsubscribe">Unsubscribe</a> | <a href="https://syncrivo.ai/privacy">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
